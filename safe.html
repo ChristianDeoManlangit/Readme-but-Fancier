@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deo aka Chai</title>
+  <link rel="icon" type="image/png" href="https://github.com/ChristianDeoManlangit/ImageSources/raw/main/BSECE.png" />
+  <style>
+    :root {
+      --bg: #f9fafb;
+      --text: #1f2937;
+      --accent: #6366f1;
+      --card: #ffffff;
+      --shadow: rgba(0, 0, 0, 0.06);
+      --container-max-width: 400px;
+      --container-min-width: 220px;
+      --container-padding: 1.5rem;
+      --section-max-width: 900px;
+      --gap: 2rem;
+      --nav-bg: rgba(255,255,255,0.65);
+      --nav-blur: blur(18px);
+      --nav-radius: 14px;
+      --nav-shadow: 0 2px 16px 0 rgba(0,0,0,0.13);
+      --nav-height: 64px;
+      --nav-padding: 0.25rem 2rem;
+      --toggle-bg-light: #e5e7eb;
+      --toggle-icon: #6366f1;
+      --wrapper-max-width: 900px;
+      --blue-accent: #2596be;
+      --divider-light: #e5e7eb;
+      --divider-dark: #888;
+      --footer-bg-light: #f9fafb;
+      --footer-bg-dark: #181a20;
+      --footer-text: #fff;
+      --footer-divider: #888;
+      --footer-created-light: #111;
+      --footer-github-light: #222;
+    }
+    [data-theme="dark"] {
+      --bg: #181a20;
+      --text: #f3f4f6;
+      --accent: #8b5cf6;
+      --card: #232b3a;
+      --shadow: rgba(0,0,0,0.25);
+      --nav-bg: rgba(36, 41, 54, 0.55);
+      --toggle-bg-light: #232b3a;
+      --toggle-icon: #fbbf24;
+      --footer-bg-light: #181a20;
+      --footer-bg-dark: #181a20;
+      --footer-text: #fff;
+      --footer-divider: #888;
+      --footer-created-light: #fff;
+      --footer-github-light: #fff;
+      --divider-dark: #888;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      height: 100%;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 0;
+      transition: background 0.3s, color 0.3s;
+    }
+    .wrapper {
+      max-width: var(--section-max-width);
+      margin: 0 auto;
+      padding: 0 1rem;
+      width: 100%;
+    }
+    /* --- Navigation Bar --- */
+    .nav-sticky-outer {
+      height: 88px; /* Space for sticky nav to rest at the top */
+      width: 100%;
+      position: relative;
+      z-index: 101;
+    }
+    .nav-sticky-inner {
+      position: fixed;
+      top: 24px;
+      left: 0;
+      width: 100vw;
+      z-index: 1001;
+      display: flex;
+      justify-content: center;
+      background: transparent;
+      pointer-events: none;
+    }
+    .nav-resting {
+      width: 100%;
+      background: var(--nav-bg);
+      box-shadow: var(--nav-shadow);
+      border-radius: var(--nav-radius);
+      max-width: var(--section-max-width);
+      transition: background 0.3s;
+      margin: 0 auto;
+      backdrop-filter: var(--nav-blur);
+      -webkit-backdrop-filter: var(--nav-blur);
+      border: 1.5px solid rgba(120,120,120,0.13);
+      pointer-events: auto;
+    }
+    .nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      min-width: 0;
+      height: var(--nav-height);
+      background: transparent;
+      border-radius: var(--nav-radius);
+      padding: var(--nav-padding);
+      gap: 0.5rem;
+    }
+    .nav-logo {
+      cursor: pointer;
+    }
+    .nav-logo img {
+      height: 40px;
+      width: 40px;
+      border-radius: 8px;
+      background: #fff;
+      object-fit: cover;
+      box-shadow: 0 2px 8px var(--shadow);
+      display: block;
+    }
+    .theme-toggle-btn {
+      background: var(--toggle-bg-light);
+      border: none;
+      outline: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 8px var(--shadow);
+      transition: background 0.2s;
+      position: relative;
+    }
+    .theme-toggle-btn:hover {
+      background: var(--accent);
+    }
+    .theme-toggle-btn svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--toggle-icon);
+      transition: fill 0.2s;
+    }
+    @media (max-width: 1000px) {
+      .nav-resting {
+        max-width: 98vw;
+      }
+      .nav-bar {
+        padding: 0.25rem 0.5rem;
+      }
+    }
+    @media (max-width: 600px) {
+      .nav-resting {
+        margin-left: 8px;
+        margin-right: 8px;
+      }
+      .nav-sticky-inner {
+        left: 0;
+      }
+    }
+    /* --- End Navigation Bar --- */
+
+    h1, h2 {
+      text-align: center;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      width: 100%;
+    }
+
+    p, em {
+      text-align: center;
+      margin: 0.5rem auto 1.5rem;
+      max-width: 800px;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .social-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .divider {
+      border: none;
+      border-top: 2px solid var(--divider-light);
+      margin: 2.5rem auto;
+      width: 90%;
+      max-width: var(--section-max-width);
+      transition: border-color 0.3s;
+      display: block;
+    }
+    [data-theme="dark"] .divider {
+      border-top: 2px solid var(--divider-dark) !important;
+    }
+
+    .section {
+      padding: 0 1.5rem;
+      width: 100%;
+      max-width: var(--section-max-width);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Consistent card/box style */
+    .fact-card,
+    .project-card,
+    .tech-box,
+    .github-card {
+      background: var(--card);
+      border-radius: 16px;
+      box-shadow: 0 4px 16px var(--shadow);
+      padding: var(--container-padding);
+      width: 100%;
+      max-width: var(--container-max-width);
+      min-width: var(--container-min-width);
+      margin: 0;
+      transition:
+        transform 0.25s cubic-bezier(.4,2,.6,1),
+        box-shadow 0.25s cubic-bezier(.4,2,.6,1),
+        background 0.25s;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .fact-card:hover,
+    .project-card:hover,
+    .tech-box:hover,
+    .github-card:hover {
+      transform: scale(1.035);
+      box-shadow: 0 0 24px 4px #6366f133, 0 8px 24px var(--shadow);
+      background: #f3f4f6;
+      z-index: 2;
+    }
+
+    /* Quick Facts */
+    .quick-facts {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--gap);
+      margin-top: 2rem;
+      width: 100%;
+      max-width: var(--section-max-width);
+    }
+
+    .fact-card {
+      font-size: 1.1rem;
+      min-height: 150px;
+      justify-content: center;
+    }
+
+    /* Light mode: black for quick facts */
+    .fact-card span,
+    .fact-card p {
+      display: block;
+      font-size: 2.2rem;
+      margin-bottom: 0.7rem;
+      font-weight: 700;
+      color: #111 !important;
+      transition: color 0.3s;
+    }
+    .fact-card p {
+      font-size: 1.15rem;
+      color: #111 !important;
+      margin: 0;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      transition: color 0.3s;
+    }
+
+    /* Dark mode: white for quick facts */
+    [data-theme="dark"] .fact-card span,
+    [data-theme="dark"] .fact-card p {
+      color: #fff !important;
+    }
+    /* On hover, dark mode: blue accent */
+    [data-theme="dark"] .fact-card:hover span,
+    [data-theme="dark"] .fact-card:hover p {
+      color: var(--blue-accent) !important;
+    }
+
+    /* Tech Stack */
+    .tech-stack-flex {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: var(--gap);
+      margin-top: 1.5rem;
+      width: 100%;
+      max-width: var(--section-max-width);
+      justify-content: center;
+      align-items: stretch;
+    }
+
+    .tech-box {
+      flex: 1 1 0;
+      min-width: var(--container-min-width);
+      max-width: var(--container-max-width);
+      margin: 0;
+      padding: var(--container-padding);
+    }
+
+    /* Light mode: black for tech h3 */
+    .tech-box h3 {
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
+      color: #111 !important;
+      text-align: center;
+      width: 100%;
+      transition: color 0.3s;
+    }
+    /* Dark mode: white for tech h3 */
+    [data-theme="dark"] .tech-box h3 {
+      color: #fff !important;
+    }
+    /* On hover, dark mode: blue accent */
+    [data-theme="dark"] .tech-box:hover h3 {
+      color: var(--blue-accent) !important;
+    }
+
+    .badge-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+
+    /* Projects Grid */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: var(--gap);
+      width: 100%;
+      max-width: var(--section-max-width);
+      padding: 2.5rem 0;
+      justify-items: center;
+      align-items: stretch;
+    }
+
+    .project-card {
+      min-height: 340px;
+      justify-content: flex-start;
+      max-width: var(--container-max-width);
+      min-width: var(--container-min-width);
+      width: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: color 0.3s;
+    }
+
+    .project-card img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 1.2rem;
+      object-fit: cover;
+      max-height: 180px;
+      min-height: 120px;
+      background: #f3f4f6;
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+
+    /* Light mode: black for project h3 and p */
+    .project-card h3 {
+      font-size: 1.18rem;
+      margin: 0.5rem 0;
+      color: #111 !important;
+      width: 100%;
+      transition: color 0.3s;
+    }
+    .project-card p {
+      font-size: 1.02rem;
+      color: #111 !important;
+      width: 100%;
+      transition: color 0.3s;
+    }
+    /* Dark mode: white for project h3 and p */
+    [data-theme="dark"] .project-card h3,
+    [data-theme="dark"] .project-card p {
+      color: #fff !important;
+    }
+    /* On hover, dark mode: blue accent */
+    [data-theme="dark"] .project-card:hover h3,
+    [data-theme="dark"] .project-card:hover p {
+      color: var(--blue-accent) !important;
+    }
+
+    /* GitHub Stats */
+    .github-card {
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      margin-bottom: 0;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      padding: 1rem;
+    }
+
+    .github-card img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-width: 100%;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+
+    .github-stats-wrapper {
+      width: 100%;
+      max-width: var(--section-max-width);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap);
+      align-items: center;
+    }
+
+    .github-card.full-width {
+      width: 100%;
+      max-width: calc(2 * var(--container-max-width) + var(--gap));
+      min-width: 0;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    .github-stats-pair {
+      display: flex;
+      flex-direction: row;
+      gap: var(--gap);
+      width: 100%;
+      max-width: calc(2 * var(--container-max-width) + var(--gap));
+      justify-content: center;
+      align-items: stretch;
+    }
+
+    .github-stats-pair .github-card {
+      flex: 1 1 0;
+      min-width: var(--container-min-width);
+      max-width: var(--container-max-width);
+      margin-bottom: 0;
+      padding: 1rem;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 1100px) {
+      .section,
+      .quick-facts,
+      .project-grid,
+      .github-stats-wrapper,
+      .tech-stack-flex {
+        max-width: 98vw;
+      }
+      .github-card.full-width,
+      .github-stats-pair {
+        max-width: calc(2 * var(--container-max-width) + var(--gap));
+      }
+      .nav-resting {
+        max-width: 98vw;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .quick-facts,
+      .project-grid,
+      .github-stats-wrapper,
+      .tech-stack-flex {
+        gap: 1.2rem;
+        max-width: 98vw;
+      }
+      .github-stats-pair {
+        gap: 1.2rem;
+      }
+    }
+
+    /* Stack GitHub stats cards below 850px and fill wrapper */
+    @media (max-width: 850px) {
+      .tech-stack-flex,
+      .project-grid,
+      .quick-facts {
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.2rem;
+        display: flex !important;
+      }
+      .github-stats-pair {
+        flex-direction: column !important;
+        gap: 1.2rem;
+        width: 100%;
+        max-width: var(--section-max-width);
+        padding-left: 0;
+        padding-right: 0;
+        box-sizing: border-box;
+        justify-content: flex-start;
+        align-items: stretch;
+      }
+      .github-stats-pair .github-card {
+        min-width: 0;
+        max-width: 100%;
+        flex: 1 1 100%;
+        width: 100%;
+      }
+      .github-card.full-width {
+        max-width: 100%;
+      }
+      .tech-box,
+      .project-card,
+      .fact-card {
+        max-width: 100%;
+        min-width: 0;
+      }
+      .nav-resting {
+        max-width: 99vw;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .section {
+        padding: 0 0.2rem;
+      }
+      .quick-facts,
+      .project-grid,
+      .github-stats-wrapper,
+      .tech-stack-flex {
+        gap: 0.8rem;
+        max-width: 99vw;
+        align-items: center;
+      }
+      .fact-card,
+      .project-card,
+      .tech-box,
+      .github-card {
+        max-width: 99vw;
+        min-width: 0;
+        width: 100%;
+        padding: 1rem;
+      }
+      .project-card {
+        min-height: 0;
+      }
+      .project-card img {
+        min-height: 80px;
+        max-height: 120px;
+      }
+      .github-card.full-width {
+        max-width: 100vw;
+      }
+      .github-stats-pair {
+        gap: 0.5rem;
+      }
+      .github-stats-pair .github-card {
+        min-width: 0;
+        max-width: 100%;
+        flex: 1 1 100%;
+        width: 100%;
+      }
+      .project-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: none;
+      }
+      .nav-resting {
+        max-width: 99vw;
+      }
+      .nav-sticky-inner {
+        left: 0;
+      }
+    }
+
+    /* --- Footer Styles --- */
+    .footer-divider {
+      border: none;
+      border-top: 1.5px solid var(--footer-divider);
+      margin: 0 auto;
+      width: 90%;
+      max-width: var(--section-max-width);
+      display: block;
+    }
+    .footer {
+      background: var(--footer-bg-light);
+      color: var(--footer-text);
+      width: 100%;
+      padding: 2.5rem 0 1.5rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 100vw;
+      min-height: 90px;
+      font-size: 1.1rem;
+      transition: background 0.3s, color 0.3s;
+      margin-top: auto;
+    }
+    [data-theme="dark"] .footer {
+      background: var(--footer-bg-dark);
+      color: var(--footer-text);
+    }
+    .footer .wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0 1rem;
+      max-width: var(--section-max-width);
+    }
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.2rem;
+      margin-left: 0;
+    }
+    .footer .footer-github {
+      margin-right: 0;
+      display: flex;
+      align-items: center;
+    }
+    .footer .footer-github a {
+      display: flex;
+      align-items: center;
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer .footer-github a:hover {
+      color: var(--blue-accent);
+    }
+    .footer .footer-github svg {
+      width: 32px;
+      height: 32px;
+      fill: var(--footer-github-light);
+      transition: fill 0.2s;
+    }
+    [data-theme="dark"] .footer .footer-github svg {
+      fill: #fff;
+    }
+    [data-theme="light"] .footer .footer-github svg {
+      fill: #222;
+    }
+    .footer .footer-name {
+      color: var(--blue-accent);
+      font-weight: 600;
+      margin-left: 0.2rem;
+    }
+    .footer .footer-created {
+      font-weight: 400;
+      color: var(--footer-created-light);
+    }
+    [data-theme="dark"] .footer .footer-created {
+      color: #fff;
+    }
+    .footer .footer-copyright {
+      font-size: 0.98rem;
+      color: #ccc;
+      margin-top: 0.1rem;
+    }
+    [data-theme="light"] .footer .footer-copyright {
+      color: #444;
+    }
+    @media (max-width: 700px) {
+      .footer .wrapper {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.7rem;
+      }
+      .footer-content {
+        align-items: center;
+        text-align: center;
+      }
+      .footer .footer-github {
+        margin-top: 0.7rem;
+      }
+    }
+  </style>
+  <script>
+    // Theme toggle logic
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      updateGithubCards();
+    }
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      setTheme(current === 'dark' ? 'light' : 'dark');
+      updateThemeIcon();
+    }
+    window.addEventListener('DOMContentLoaded', () => {
+      // Always default to dark mode
+      setTheme('dark');
+      updateThemeIcon();
+      updateGithubCards();
+      // If user has a preference, override after a tick
+      setTimeout(() => {
+        const saved = localStorage.getItem('theme');
+        if (saved) {
+          setTheme(saved);
+          updateThemeIcon();
+          updateGithubCards();
+        }
+      }, 0);
+      // Scroll to top when logo is clicked
+      const logo = document.querySelector('.nav-logo');
+      if (logo) {
+        logo.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+    });
+    function updateThemeIcon() {
+      const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+      const sun = document.querySelector('#theme-icon .sun');
+      const moon = document.querySelector('#theme-icon .moon');
+      if (!sun || !moon) return;
+      if (theme === 'dark') {
+        sun.style.display = 'none';
+        moon.style.display = '';
+      } else {
+        sun.style.display = '';
+        moon.style.display = 'none';
+      }
+    }
+    // Dynamically update GitHub cards based on theme
+    function updateGithubCards() {
+      const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+      // Profile Details
+      const profileDetails = document.getElementById('github-profile-details');
+      // Stats
+      const stats = document.getElementById('github-stats');
+      // Repos per language
+      const reposLang = document.getElementById('github-repos-lang');
+      if (!profileDetails || !stats || !reposLang) return;
+      if (theme === 'dark') {
+        profileDetails.src = "http://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=ChristianDeoManlangit&theme=react";
+        stats.src = "http://github-profile-summary-cards.vercel.app/api/cards/stats?username=ChristianDeoManlangit&theme=react";
+        reposLang.src = "http://github-profile-summary-cards-ktcudck4p.vercel.app/api/cards/repos-per-language?username=ChristianDeoManlangit&theme=react";
+      } else {
+        profileDetails.src = "http://github-profile-summary-cards-ktcudck4p.vercel.app/api/cards/profile-details?username=ChristianDeoManlangit&theme=transparent";
+        stats.src = "http://github-profile-summary-cards-ktcudck4p.vercel.app/api/cards/stats?username=ChristianDeoManlangit&theme=transparent";
+        reposLang.src = "http://github-profile-summary-cards-ktcudck4p.vercel.app/api/cards/repos-per-language?username=ChristianDeoManlangit&theme=transparent";
+      }
+    }
+  </script>
+</head>
+<body>
+  <!-- Space above nav for resting place -->
+  <div class="nav-sticky-outer">
+    <div class="nav-sticky-inner">
+      <div class="nav-resting">
+        <nav class="nav-bar">
+          <div class="nav-logo" tabindex="0" aria-label="Scroll to top">
+            <img src="https://github.com/ChristianDeoManlangit/ImageSources/raw/main/BSECE.png" alt="Logo" />
+          </div>
+          <button class="theme-toggle-btn" aria-label="Toggle theme" onclick="toggleTheme()">
+            <svg id="theme-icon" viewBox="0 0 24 24">
+              <g class="sun">
+                <circle cx="12" cy="12" r="5"/>
+                <g>
+                  <line x1="12" y1="1" x2="12" y2="3"/>
+                  <line x1="12" y1="21" x2="12" y2="23"/>
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                  <line x1="1" y1="12" x2="3" y2="12"/>
+                  <line x1="21" y1="12" x2="23" y2="12"/>
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </g>
+              </g>
+              <g class="moon" style="display:none;">
+                <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/>
+              </g>
+            </svg>
+          </button>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <!-- End Navigation Bar -->
+
+  <h1>
+    ‎ 
+  </h1>
+  <h1>
+    <img src="https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif" width="40px" alt="Wave" />
+    Hi, I'm Deo aka Chai
+  </h1>
+
+  <p>
+    🎓 <strong>College Student</strong> | 💻 <strong>Aspiring Front-End Developer</strong> | 🎨 <strong>Graphic Designer</strong><br />
+    📍 Currently pursuing a <strong>Bachelor of Science in Electronics Engineering</strong>
+  </p>
+
+  <div class="social-links">
+    <a href="https://web.facebook.com/christiandeomanlangit725">
+      <img src="https://img.shields.io/badge/Facebook-%231877F2.svg?style=for-the-badge&logo=Facebook&logoColor=white" alt="Facebook">
+    </a>
+    <a href="https://www.linkedin.com/in/christiandeomanlangit725/">
+      <img src="https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn">
+    </a>
+    <a href="https://www.instagram.com/christiandeomanlangit">
+      <img src="https://img.shields.io/badge/Instagram-%23E4405F.svg?style=for-the-badge&logo=Instagram&logoColor=white" alt="Instagram">
+    </a>
+  </div>
+
+  <hr class="divider" />
+
+  <div class="section">
+    <h2>👨‍💻 About Me</h2>
+    <p>
+      Hi! I’m Deo, but you can call me <em>Chai</em>. I specialize in <strong>web design</strong> and <strong>UI development</strong> using tools like <strong>HTML</strong>, <strong>CSS</strong>, <strong>JavaScript</strong>, <strong>Figma</strong>, and <strong>Framer</strong>. I’m passionate about creating smooth, clean, and responsive user experiences.
+    </p>
+    <p>
+      I also work with <strong>Python</strong>, <strong>Java</strong>, <strong>C++</strong>, and <strong>Visual Basic</strong>. Outside coding, I’m into <strong>graphic design</strong> — from posters to brand design — using <strong>Photoshop</strong>, <strong>Illustrator</strong>, and <strong>After Effects</strong>.
+    </p>
+  </div>
+
+  <hr class="divider" />
+
+  <div class="section">
+    <h2>📊 Quick Facts</h2>
+    <div class="quick-facts">
+      <div class="fact-card">
+        <span>19</span>
+        <p>📏 Age</p>
+      </div>
+      <div class="fact-card">
+        <span>BSECE</span>
+        <p>🎓 Degree</p>
+      </div>
+      <div class="fact-card">
+        <span>9+</span>
+        <p>💬 Known Languages</p>
+      </div>
+      <div class="fact-card">
+        <span>15+</span>
+        <p>⚙️ Projects Built</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <div class="section github-stats-wrapper">
+    <h2>📊 GitHub Stats</h2>
+    <!-- Full-width GitHub profile card -->
+    <div class="github-card full-width">
+      <img id="github-profile-details" src="http://github-profile-summary-cards-ktcudck4p.vercel.app/api/cards/profile-details?username=ChristianDeoManlangit&theme=transparent" alt="GitHub Profile Details" />
+    </div>
+    <!-- Side-by-side cards -->
+    <div class="github-stats-pair">
+      <div class="github-card">
+        <img id="github-stats" src="http://github-profile-summary-cards-ktcudck4p.vercel.app/api/cards/stats?username=ChristianDeoManlangit&theme=transparent" alt="GitHub Stats" />
+      </div>
+      <div class="github-card">
+        <img id="github-repos-lang" src="http://github-profile-summary-cards-ktcudck4p.vercel.app/api/cards/repos-per-language?username=ChristianDeoManlangit&theme=transparent" alt="Top Languages" />
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <div class="section">
+    <h2>🧰 Tech Stack</h2>
+    <div class="tech-stack-flex">
+      <!-- Programming & Web Development -->
+      <div class="tech-box">
+        <h3>💻 Programming & Web Development</h3>
+        <div class="badge-container">
+          <img src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white">
+          <img src="https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white">
+          <img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white">
+          <img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E">
+          <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54">
+          <img src="https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white">
+          <img src="https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white">
+          <img src="https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white">
+          <img src="https://img.shields.io/badge/lua-%232C2D72.svg?style=for-the-badge&logo=lua&logoColor=white">
+          <img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB">
+          <img src="https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white">
+          <img src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white">
+          <img src="https://img.shields.io/badge/TensorFlow-FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white">
+          <img src="https://img.shields.io/badge/OpenCV-5C3EE8.svg?style=for-the-badge&logo=OpenCV&logoColor=white">
+        </div>
+      </div>
+      <!-- Design & Editing Tools -->
+      <div class="tech-box">
+        <h3>🎨 Design & Editing Tools</h3>
+        <div class="badge-container">
+          <img src="https://img.shields.io/badge/Adobe%20After%20Effects-9999FF.svg?style=for-the-badge&logo=Adobe%20After%20Effects&logoColor=white">
+          <img src="https://img.shields.io/badge/Adobe%20Audition-9999FF.svg?style=for-the-badge&logo=Adobe%20Audition&logoColor=white">
+          <img src="https://img.shields.io/badge/Adobe%20Premiere%20Pro-9999FF.svg?style=for-the-badge&logo=Adobe%20Premiere%20Pro&logoColor=white">
+          <img src="https://img.shields.io/badge/adobe%20photoshop-%2331A8FF.svg?style=for-the-badge&logo=adobe%20photoshop&logoColor=white">
+          <img src="https://img.shields.io/badge/adobe%20illustrator-%23FF9A00.svg?style=for-the-badge&logo=adobe%20illustrator&logoColor=white">
+          <img src="https://img.shields.io/badge/DaVinci%20Resolve-233A51.svg?style=for-the-badge&logo=DaVinci-Resolve&logoColor=white">
+          <img src="https://img.shields.io/badge/AutoCAD-E51050.svg?style=for-the-badge&logo=AutoCAD&logoColor=white">
+          <img src="https://img.shields.io/badge/Cinema%204D-011A6A.svg?style=for-the-badge&logo=Cinema-4D&logoColor=white">
+          <img src="https://img.shields.io/badge/SketchUp-005F9E.svg?style=for-the-badge&logo=SketchUp&logoColor=white">
+          <img src="https://img.shields.io/badge/Canva-00C4CC.svg?style=for-the-badge&logo=Canva&logoColor=white">
+          <img src="https://img.shields.io/badge/Figma-F24E1E.svg?style=for-the-badge&logo=Figma&logoColor=white">
+          <img src="https://img.shields.io/badge/Framer-0055FF.svg?style=for-the-badge&logo=Framer&logoColor=white">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <div class="section">
+    <h2>🚀 Featured Projects</h2>
+    <div class="project-grid">
+      <div class="project-card">
+        <a href="https://github.com/ChristianDeoManlangit/Chai-s-Graphic-Design-Portfolio" target="_blank">
+          <img src="assets/1.png" alt="Chai's Portfolio">
+        </a>
+        <h3>Chai's Graphic Design Portfolio</h3>
+        <p><em>HTML │ Tailwind CSS │ Vanilla JS</em></p>
+      </div>
+      <div class="project-card">
+        <a href="https://github.com/ChristianDeoManlangit/ThinkPlus-Ecommerce-Site" target="_blank">
+          <img src="assets/2.png" alt="Think+">
+        </a>
+        <h3>Think+</h3>
+        <p><em>HTML │ Tailwind CSS │ Vanilla JS</em></p>
+      </div>
+      <div class="project-card">
+        <a href="https://github.com/ChristianDeoManlangit/Markdown-Interpreter-TypeScript-Prototype" target="_blank">
+          <img src="assets/3.png" alt="Markdown Editor">
+        </a>
+        <h3>Markdown Editor Web App</h3>
+        <p><em>React │ Vite │ Tailwind CSS │ TypeScript</em></p>
+      </div>
+      <div class="project-card">
+        <a href="https://github.com/ChristianDeoManlangit/GitHub-Repository-Language-Analyzer-TypeScript-Prototype" target="_blank">
+          <img src="assets/4.png" alt="Language Analyzer">
+        </a>
+        <h3>GitHub Repo Language Analyzer</h3>
+        <p><em>React │ Vite │ Tailwind CSS │ TypeScript</em></p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="footer-divider" />
+
+  <footer class="footer">
+    <div class="wrapper">
+      <div class="footer-content">
+        <span class="footer-created">
+          Created By <span class="footer-name">Christian Deo Manlangit</span>
+        </span>
+        <span class="footer-copyright">
+          © 2025 Readme but 𝕱𝖆𝖓𝖈𝖎𝖊𝖗. All rights reserved.
+        </span>
+      </div>
+      <div class="footer-github">
+        <a href="https://github.com/christiandeomanlangit" target="_blank" rel="noopener" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0.297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.416-4.042-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.084-.729.084-.729 1.205.084 1.84 1.236 1.84 1.236 1.07 1.834 2.809 1.304 3.495.997.108-.775.418-1.305.762-1.605-2.665-.305-5.466-1.334-5.466-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.553 3.297-1.23 3.297-1.23.653 1.653.242 2.873.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.803 5.624-5.475 5.921.43.372.823 1.102.823 2.222 0 1.606-.014 2.898-.014 3.293 0 .322.216.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
